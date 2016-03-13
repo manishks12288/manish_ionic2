@@ -1,10 +1,12 @@
 import {Page, NavController, NavParams} from 'ionic-angular';
 import {ItemDetailsPage} from '../item-details/item-details';
 import {UserData} from '../../providers/user-data/user-data';
+import {FallbackDirective} from '../../components/fallback-directive/fallback-directive';
 import * as ConfigData from '../../providers/config-data/config-data';
 
 @Page({
-    templateUrl: 'build/pages/list/list.html'
+    templateUrl: 'build/pages/list/list.html',
+     directives: [FallbackDirective]
 })
 export class ListPage {
     selectedItem: any;
