@@ -3,11 +3,11 @@ import {HelloIonicPage} from './pages/hello-ionic/hello-ionic';
 import {ListPage} from './pages/list/list';
 import {LoginPage} from './pages/login/login';
 import {UserData} from './providers/user-data/user-data';
-
-
+import {BloglistPage} from './pages/bloglist/bloglist';
+import {BlogData} from './providers/blog-data/blog-data';
 @App({
   templateUrl: 'build/app.html',
-  providers: [UserData],
+  providers: [UserData,BlogData],
   config: {} // http://ionicframework.com/docs/v2/api/config/Config/
 })
 class MyApp {
@@ -26,7 +26,8 @@ class MyApp {
     this.pages = [
       //{ title: 'Hello Ionic', component: HelloIonicPage },
       { title: 'Group List', component: ListPage },
-      { title: 'Login', component: LoginPage }
+      { title: 'Login', component: LoginPage },
+      {title: 'Bloglist', component: BloglistPage}
     ];
   }
 
