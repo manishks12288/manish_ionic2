@@ -1,8 +1,9 @@
-import {Page, NavController, NavParams} from 'ionic-angular';
+import {Page, IonicApp, NavController, NavParams} from 'ionic-angular';
 import {ItemDetailsPage} from '../item-details/item-details';
 import {UserData} from '../../providers/user-data/user-data';
 import {FallbackDirective} from '../../components/fallback-directive/fallback-directive';
 import * as ConfigData from '../../providers/config-data/config-data';
+
 //http://demo.appcarvers.com/junite/index.php?option=com_api&format=raw&app=easyblog&resource=latest&key=c2ecb0c473849018bf97b67302f42caebc08ee1e&limit=5&limitstart=0&user_id=
 @Page({
     templateUrl: 'build/pages/list/list.html',
@@ -12,17 +13,27 @@ export class ListPage {
     selectedItem: any;
     // icons: string[];
     //items: Array<{title: string, note: string, icon: string}>;
-    itemlists: Array<{ title: string, imagesrc: string, details: string }>;
+    itemlists: Array<{ title: string, imagesrc: string, details: string, member_count: any, category_name:string}>;
     limitstart:any;
     configs:any;
-    constructor(private nav: NavController, navParams: NavParams, private userData: UserData) {
+    loading:any;
+    
+    constructor(private nav: NavController, navParams: NavParams, private userData: UserData, private app:IonicApp) {
         // If we navigated to this page, we will have an item available as a nav param
         this.itemlists = [];
         this.selectedItem = navParams.get('item');
         this.limitstart=0;
         this.getGroupList(this.limitstart);
+        this.loading = app.getComponent('loading');
         ConfigData.findAll().then(data => {this.configs = data;console.log(data);});
+        //this.showLoader();
     }
+    // showLoader(){
+    //     this.loading.show();
+    //     setTimeout(() => {
+    //         this.loading.hide();
+    //     }, 2000);
+    // }
     getGroupList(limitstart,events=null){
          this.userData.load(limitstart).then((value: any) => {
              console.log(this.configs[0].title);
@@ -36,7 +47,9 @@ export class ListPage {
                 this.itemlists.push({
                     title: value[i].title,
                     imagesrc: value[i].avatar_medium,
-                    details: value[i].description
+                    details: value[i].description,
+                    member_count: value[i].member_count,
+                    category_name: value[i].category_name
                 });
             }
             if(events != null)

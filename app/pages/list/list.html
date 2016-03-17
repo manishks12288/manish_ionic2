@@ -15,7 +15,17 @@
             </ion-thumbnail>
             <h2>{{item.title}}</h2>
             <p>{{item.details}}</p>
-            <button clear item-right>View</button>
+            <h3>
+               <span> 
+                   <ion-icon name="people"></ion-icon>
+                   {{item.member_count}} 
+                </span>
+                <span padding>
+                   <ion-icon name="folder"></ion-icon>
+                   {{item.category_name}}
+               </span>
+            </h3>
+            <!--<button clear item-right>View</button>-->
         </ion-item>
     </ion-list>
   <ion-infinite-scroll (infinite)="doInfinite($event)">

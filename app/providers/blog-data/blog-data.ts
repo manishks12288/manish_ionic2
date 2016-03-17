@@ -2,7 +2,7 @@
 import {Injectable, Inject} from 'angular2/core';
 import {Http} from 'angular2/http';
 import 'rxjs/add/operator/map';
-
+import {IonicApp} from 'ionic-angular';
 /*
   Generated class for the UserData provider.
 
@@ -17,7 +17,9 @@ export class BlogData {
     limitstart;
     url;
     callingurl;
-  constructor(http:Http) {
+    loading:any;
+  constructor(http:Http, private app:IonicApp) {
+    this.loading = app.getComponent("loading");
     this.http = http;
     this.data = null;
     this.limit=5;
@@ -37,12 +39,14 @@ export class BlogData {
       // We're using Angular Http provider to request the data,
       // then on the response it'll map the JSON data to a parsed JS object.
       // Next we process the data and resolve the promise with the new data.
+      this.loading.show();
       this.http.get(this.callingurl)
         .map(res => res.json())
         .subscribe(data => {
           // we've got back the raw data, now generate the core schedule data
           // and save the data for later reference
           this.data = data;
+          this.loading.hide();
           resolve(this.data);
         });
     });
